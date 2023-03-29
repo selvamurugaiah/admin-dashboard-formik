@@ -1,6 +1,6 @@
 import React from "react";
 import AppBar from "@mui/material/AppBar";
-import AddMark from "./AddMark";
+import AddMark from "./AddBook";
 import Toolbar from "@mui/material/Toolbar";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
@@ -14,10 +14,10 @@ const Header = ({ mode, setMode }) => {
       <AppBar position="static">
         <Toolbar style={{backgroundColor:'lightblue'}}>
           <Button onClick={() => navigate("/")} style={{color:'black'}}>
-          <HomeIcon/>Home
+          <HomeIcon/>Available Books
           </Button>
           <Button onClick={() => navigate("/add")} style={{color:'black'}}>
-            Add Student
+            Add Book
           </Button>
           <Button
             style={{ marginLeft: "auto" }}

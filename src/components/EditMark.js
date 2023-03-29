@@ -6,30 +6,24 @@ import { API } from "../api/api";
 const EditMark = () => {
   const { id } = useParams();
 
-  const [studentDetails, setStudentDetails] = useState({
+  const [bookDetails, setBooktDetails] = useState({
     name: "",
-    email: "",
     image: "",
-    tamil: "",
-    eng: "",
-    sci: "",
-    soc: "",
-    math: "",
+    author:"",
+    language:"",
+    publish:"",
   });
 
   useEffect(() => {
     fetch(`${API}/${id}`)
       .then((response) => response.json())
       .then((data) =>
-        setStudentDetails({
+        setBooktDetails({
           name: data.name,
-          email: data.email,
           image: data.image,
-          tamil: data.tamil,
-          eng: data.eng,
-          sci: data.sci,
-          soc: data.soc,
-          math: data.math,
+          author:data.author,
+          language:data.language,
+          publish:data.publish,
         })
       );
   }, []);
@@ -43,7 +37,7 @@ const EditMark = () => {
   };
   return (
     <div>
-      <Form type={"Edit"} studentDetails={studentDetails} onSubmit={onEdit} />
+      <Form type={"Edit"} bookDetails={bookDetails} onSubmit={onEdit} />
     </div>
   );
 };

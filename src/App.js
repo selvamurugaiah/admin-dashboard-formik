@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import Home from "./components/Home";
 import Header from "./components/Header";
 import NotFound from "./components/NotFound";
-import AddMark from "./components/AddMark";
+
 import EditMark from "./components/EditMark";
 import ViewMark from "./components/ViewMark";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import "./App.css";
+import AddBook from "./components/AddBook";
 
 const App = () => {
   const [mode, setMode] = useState("light");
@@ -25,7 +26,7 @@ const App = () => {
           <Header mode={mode} setMode={setMode} />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/add" element={<AddMark />} />
+            <Route path="/add" element={<AddBook />} />
             <Route path="/student/edit/:id" element={<EditMark />} />
             <Route path="/student/view/:id" element={<ViewMark />} />
             <Route path="/404" element={<NotFound />} />

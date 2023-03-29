@@ -9,69 +9,61 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import * as yup from "yup";
 import { useFormik } from "formik";
+import { useNavigate } from "react-router-dom";
+import { API } from "../api/api";
 
 const formValidationSchema = yup.object({
   name: yup.string().required("Please enter a Name"),
-  email: yup.string().required("Please provide email address"),
-  tamil: yup
-    .number()
-    .typeError("Must be number")
-    .required("Please enter mark")
-    .min(0)
-    .max(100),
-  eng: yup
-    .number()
-    .typeError("Must be number")
-    .required("Please enter mark")
-    .min(0)
-    .max(100),
-  sci: yup
-    .number()
-    .typeError("Must be number")
-    .required("Please enter mark")
-    .min(0)
-    .max(100),
-  soc: yup
-    .number()
-    .typeError("Must be number")
-    .required("Please enter mark")
-    .min(0)
-    .max(100),
-  math: yup
-    .number()
-    .typeError("Must be number")
-    .required("Please enter mark")
-    .min(0)
-    .max(100),
+  image:yup.string().required("Please enter a img link"),
+  author:yup.string().required("please enter the author name"),
+  language:yup.string().required("please say language of the book"),
+  publish:yup.string().required("please enter a published year"),
+ 
 });
 
-const Form = ({ onSubmit, type, studentDetails }) => {
+const Form = ({ onSubmit, type, bookDetails }) => {
   const { handleSubmit, handleChange, errors, handleBlur, touched, values } =
     useFormik({
       initialValues: {
-        name: studentDetails.name,
-        email: studentDetails.email,
-        image: studentDetails.image,
-        tamil: studentDetails.tamil,
-        eng: studentDetails.eng,
-        sci: studentDetails.sci,
-        soc: studentDetails.soc,
-        math: studentDetails.math,
+        name: bookDetails.name,
+        image: bookDetails.image,
+        author: bookDetails.author,
+        language: bookDetails.language,
+        publish: bookDetails.publish,
+      
       },
       enableReinitialize: `${type === "Add" ? false : true}`,
       validationSchema: formValidationSchema,
-      onSubmit: (values) => {
-        let { tamil, eng, sci, soc, math } = values;
-        tamil = +tamil;
-        eng = +eng;
-        sci = +sci;
-        soc = +soc;
-        math = +math;
-        const data = { ...values, tamil, eng, sci, soc, math };
-        // console.log(values);
-        onSubmit(data);
+      onSubmit: (newBook) => {
+         console.log('onClicked',newBook)
+         addNewBook(newBook)
       },
     });
+    const navigate = useNavigate()
+    const addNewBook = async (newBook) => {
+
+      try {
+        const response = await fetch(
+          `${API}`,
+          {
+            method: "POST",
+            body: JSON.stringify(newBook),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const data = await response.json();
+        console.log(data);
+        //setUser([...user, data])
+        navigate("/")
+       
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+
   return (
     <div>
       <Container component="main" maxWidth="xs">
@@ -85,7 +77,7 @@ const Form = ({ onSubmit, type, studentDetails }) => {
           }}
         >
           <Typography component="h1" variant="h5">
-            {type === "Add" ? "Add" : "Edit"} Student Details
+            {type === "Add" ? "Add" : "Edit"} Book Details
           </Typography>{/*Use typography to present your design and content as clearly and efficiently as possible.*/}
           <Box
             component="form"
@@ -108,20 +100,6 @@ const Form = ({ onSubmit, type, studentDetails }) => {
                   autoFocus
                 />
               </Grid>
-
-              <Grid item xs={12}>
-                <TextField
-                  error={errors.email && touched.email ? true : false}
-                  helperText={errors.email && touched.email ? errors.email : ""}
-                  onChange={handleChange}
-                  value={values.email}
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  onBlur={handleBlur}
-                  name="email"
-                />
-              </Grid>
               <Grid item xs={12}>
                 <TextField
                   error={errors.image && touched.image ? true : false}
@@ -137,70 +115,45 @@ const Form = ({ onSubmit, type, studentDetails }) => {
               </Grid>
               <Grid item xs={12} sm={4}>
                 <TextField
-                  error={errors.tamil && touched.tamil ? true : false}
-                  helperText={errors.tamil && touched.tamil ? errors.tamil : ""}
+                  error={errors.author && touched.author ? true : false}
+                  helperText={errors.author && touched.author ? errors.author : ""}
                   onChange={handleChange}
-                  value={values.tamil}
+                  value={values.author}
                   fullWidth
-                  id="tam"
-                  label="Tamil Mark"
+                  id="author"
+                  label="Author Name"
                   onBlur={handleBlur}
-                  name="tamil"
+                  name="author"
                 />
               </Grid>
               <Grid item xs={12} sm={4}>
                 <TextField
-                  error={errors.eng && touched.eng ? true : false}
-                  helperText={errors.eng && touched.eng ? errors.eng : ""}
+                  error={errors.language && touched.language ? true : false}
+                  helperText={errors.language && touched.language ? errors.language : ""}
                   onChange={handleChange}
-                  value={values.eng}
+                  value={values.language}
                   fullWidth
-                  id="eng"
-                  label="English Mark"
+                  id="lang"
+                  label="language of the book"
                   onBlur={handleBlur}
-                  name="eng"
+                  name="language"
                 />
               </Grid>
               <Grid item xs={12} sm={4}>
                 <TextField
-                  error={errors.sci && touched.sci ? true : false}
-                  helperText={errors.sci && touched.sci ? errors.sci : ""}
+                  error={errors.publish && touched.publish ? true : false}
+                  helperText={errors.publish && touched.publish ? errors.publish : ""}
                   onChange={handleChange}
-                  value={values.sci}
+                  value={values.publish}
                   fullWidth
-                  id="sci"
-                  label="Science Mark"
+                  id="publish"
+                  label="Published year"
                   onBlur={handleBlur}
-                  name="sci"
+                  name="publish"
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  error={errors.soc && touched.soc ? true : false}
-                  helperText={errors.soc && touched.soc ? errors.soc : ""}
-                  onChange={handleChange}
-                  value={values.soc}
-                  fullWidth
-                  id="soc"
-                  label="Social Mark"
-                  onBlur={handleBlur}
-                  name="soc"
-                />
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  error={errors.math && touched.math ? true : false}
-                  helperText={errors.math && touched.math ? errors.math : ""}
-                  onChange={handleChange}
-                  value={values.math}
-                  fullWidth
-                  id="math"
-                  label="Math Mark"
-                  onBlur={handleBlur}
-                  name="math"
-                />
-              </Grid>
-            </Grid>
+
             <Button
               type="submit"
               fullWidth

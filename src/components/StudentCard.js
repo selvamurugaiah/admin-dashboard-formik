@@ -7,7 +7,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 
-const StudentCard = ({ data, id, deleteStudent }) => {
+const StudentCard = ({ data, id, deleteBook }) => {
   const navigate = useNavigate();
   return (
     <Card className="style" variant="outlined" sx={{ maxWidth: 345 }}>
@@ -22,11 +22,11 @@ const StudentCard = ({ data, id, deleteStudent }) => {
           {data.name}
         </Typography>
         <Typography variant="body2" color="white">
-          Mail ID : {`${data.email}`}
+          Author Name : {`${data.author}`}
         </Typography>
       </CardContent>
       <CardActions>
-        <Button onClick={() => deleteStudent(id)} size="small"
+        <Button onClick={() => deleteBook(id)} size="small"
         style={{backgroundColor:'crimson',color:'white'}}>
           Delete
         </Button>

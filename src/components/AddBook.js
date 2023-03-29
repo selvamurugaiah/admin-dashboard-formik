@@ -3,16 +3,15 @@ import { useNavigate } from "react-router-dom";
 import Form from "./Form";
 import { API } from "../api/api";
 
-const AddMark = () => {
-  const [studentDetails, setStudentDetails] = useState({
+const AddBook = () => {
+  const [bookDetails, setBooktDetails] = useState({
     name: "",
-    email: "",
     image: "",
-    tamil: "",
-    eng: "",
-    sci: "",
-    soc: "",
-    math: "",
+    author:"",
+    language:"",
+    publish:"",
+    
+    
   });
   
  const navigate = useNavigate();
@@ -40,9 +39,9 @@ const AddMark = () => {
   };
   return (
     <div>
-      <Form type={"Add"} studentDetails={studentDetails} onSubmit={addNewUser} />
+      <Form type={"Add"} bookDetails={bookDetails} onSubmit={addNewUser} />
     </div>
   );
 };
 
-export default AddMark;
+export default AddBook;

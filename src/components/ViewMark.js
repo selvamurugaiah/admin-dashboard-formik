@@ -13,24 +13,14 @@ import Box from "@mui/material/Box";
 const ViewMark = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [student, setStudent] = useState([]);
+  const [book, setBook] = useState([]);
   useEffect(() => {
     fetch(`${API}/${id}`)
       .then((res) => res.json())
-      .then((data) => setStudent(data));
+      .then((data) => setBook(data));
   }, [id]);
-  const marks = {
-    tamil: student.tamil,
-    eng: student.eng,
-    sci: student.sci,
-    soc: student.soc,
-    math: student.math,
-  };
-  const totalMark = marks
-    ? Object.values(marks).reduce((acc, sum) => acc + sum, 0)
-    : 0;
 
-  if (!student.name)
+  if (!book.name)
     return (
       <Box sx={{ display: "flex", justifyContent: "center" }}>
         <CircularProgress />
@@ -46,20 +36,22 @@ const ViewMark = () => {
         <CardMedia
           component="img"
           height="300"
-          image={student.image}
-          alt={student.name}
+          image={book.image}
+          alt={book.name}
         />
         <CardContent>
           <Typography gutterBottom variant="h3" component="div">
-            {student.name}
+            {book.name}
           </Typography>
           <Typography gutterBottom variant="h6" color="text.secondary">
-            Contact : {student.email}
+            Author : {book.author}
           </Typography>
-          <Typography gutterBottom variant="h6" color="dark">
-            Total Marks : {totalMark} <sub>/500</sub>
+          <Typography gutterBottom variant="h6" color="text.secondary">
+            language : {book.language}
           </Typography>
-          <BasicTable marks={marks} />
+          <Typography gutterBottom variant="h6" color="text.secondary">
+            Publish : {book.publish}
+          </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions>

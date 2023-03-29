@@ -6,21 +6,21 @@ import Container from "@mui/material/Container";
 import { API } from "../api/api";
 
 const Home = () => {
-  const [students, setStudents] = useState([]);
+  const [books, setBooks] = useState([]);
 
-  function getStudents() {
+  function getBooks() {
     fetch(`${API}`, {
       method: "GET",
-    }).then((res) => res.json().then((data) => setStudents(data)));
+    }).then((res) => res.json().then((data) => setBooks(data)));
   }
   useEffect(() => {
-    getStudents();
+    getBooks();
   }, []);
 
-  function deleteStudent(id) {
+  function deleteBook(id) {
     fetch(`${API}/${id}`, {
       method: "DELETE",
-    }).then(() => getStudents());
+    }).then(() => getBooks());
   }
 
   return (
@@ -31,13 +31,13 @@ const Home = () => {
           spacing={{ xs: 2, md: 3 }}
           columns={{ xs: 4, sm: 12, md: 12 }}
         >
-          {students.map((student) => {
+          {books.map((book) => {
             return (
-              <Grid key={student.id} item xs={3} sm={12} md={3}>
+              <Grid key={book.id} item xs={3} sm={12} md={3}>
                 <StudentCard
-                  deleteStudent={deleteStudent}
-                  data={student}
-                  id={student.id}
+                  deleteBook={deleteBook}
+                  data={book}
+                  id={book.id}
                 />
               </Grid>
             );
